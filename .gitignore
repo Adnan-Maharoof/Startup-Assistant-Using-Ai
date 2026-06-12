@@ -3,3 +3,16 @@ venv/
 __pycache__/
 *.py c
 db.sqlite3
+
+# Flutter
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android Studio
+.idea/
+
+# Dart
+.packages
+.pub-cache/

@@ -1,0 +1,213 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<style>
+    .chat-wrapper {
+        width: 100%;
+        max-width: 900px;
+        height: 80vh;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        margin: 20px auto;
+    }
+
+    /* Messages Area */
+    .messages-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message-wrapper {
+        display: flex;
+        margin-bottom: 12px;
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    .message-wrapper.sent { justify-content: flex-end; }
+    .message-wrapper.received { justify-content: flex-start; }
+
+    .message-bubble {
+        max-width: 75%;
+        padding: 10px 16px;
+        border-radius: 18px;
+        font-size: 15px;
+        line-height: 1.4;
+    }
+
+    .message-bubble.sent {
+        background: #10B981; /* Matches your Green Theme */
+        color: white;
+        border-bottom-right-radius: 2px;
+    }
+
+    .message-bubble.received {
+        background: #e9ecef;
+        color: #333;
+        border-bottom-left-radius: 2px;
+    }
+
+    .chat-header {
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        padding: 15px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: white;
+    }
+
+    .user-avatar img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid white;
+        object-fit: cover;
+    }
+
+    #textfield {
+        border: none;
+        background: transparent;
+        outline: none;
+        resize: none;
+        width: 100%;
+    }
+</style>
+
+
+
+<div class="container mx-auto px-4">
+    <div class="chat-wrapper">
+        <div class="chat-header">
+            <div class="flex items-center gap-3">
+                <a href="javascript:history.back()" class="text-white hover:opacity-80">
+                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                </a>
+                <div class="user-avatar" id="iiim">
+                    </div>
+                <div class="user-info" id="nnnm">
+                    <h6 class="font-bold">Loading...</h6>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <span class="material-symbols-outlined cursor-pointer">info</span>
+            </div>
+        </div>
+
+        <div class="messages-container" id="send1">
+            </div>
+
+        <div class="p-4 bg-white border-t">
+            <div class="flex gap-3 items-center bg-gray-100 rounded-full px-5 py-2">
+                <span class="material-symbols-outlined text-gray-400">mood</span>
+                <textarea id="textfield" placeholder="Write a message..." rows="1"></textarea>
+                <button id="button" class="text-emerald-500 hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        test(); // Initial load
+        repeatEverySecond(); // Start polling
+
+        // Handle Enter key for sending
+        $('#textfield').on('keypress', function(e) {
+            if (e.which === 13 && !e.shiftKey) {
+                e.preventDefault();
+                $('#button').click();
+            }
+        });
+    });
+
+    function scrollToBottom() {
+        var container = document.querySelector('.messages-container');
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function test() {
+        $.ajax({
+            url: "/myapp/chat_view/",
+            type: "GET",
+            dataType: "json",
+            success: function(dat) {
+                var data = dat["data"];
+                var name = dat["name"];
+                var photo = dat["photo"];
+                var user_lid = dat["toid"];
+
+                // Update Header info
+                $("#iiim").html(`<img src="${photo}" alt="User">`);
+                $("#nnnm").html(`<h6 class="font-bold">${name}</h6><small class="text-xs opacity-80">Online</small>`);
+
+                // Display messages
+                var html_content = "";
+                if (data.length === 0) {
+                    html_content = `<div class="flex flex-col items-center justify-center h-full text-gray-400">
+                                        <span class="material-symbols-outlined text-5xl">chat_bubble</span>
+                                        <p>No messages yet</p>
+                                    </div>`;
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        var type = data[i]['from'];
+                        var mesg = data[i]['message'];
+
+                        if (type != user_lid) {
+                            html_content += `
+                                <div class="message-wrapper sent">
+                                    <div class="message-bubble sent">${mesg}</div>
+                                </div>`;
+                        } else {
+                            html_content += `
+                                <div class="message-wrapper received">
+                                    <div class="message-bubble received">${mesg}</div>
+                                </div>`;
+                        }
+                    }
+                }
+
+                // Update only if content changed to avoid flicker
+                if ($("#send1").html() !== html_content) {
+                    $("#send1").html(html_content);
+                    scrollToBottom();
+                }
+            }
+        });
+    }
+
+    $("#button").click(function() {
+        var msg = $("#textfield").val().trim();
+        if (msg === "") return;
+
+        $.ajax({
+            url: "/myapp/chat_send/" + encodeURIComponent(msg),
+            type: "GET",
+            success: function(dat) {
+                $("#textfield").val("");
+                test(); // Refresh immediately
+            }
+        });
+    });
+
+    function repeatEverySecond() {
+        setInterval(test, 2000);
+    }
+</script>
+
+{% endblock %}

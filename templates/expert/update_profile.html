@@ -1,0 +1,100 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Update Expert Details
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/Updateprofile_post/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-3 col-form-label fw-bold">Name</label>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              value="{{ data.name }}"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-3 col-form-label fw-bold">Email</label>
+          <div class="col-sm-9">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              value="{{ data.email }}"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="phone" class="col-sm-3 col-form-label fw-bold">Phone</label>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              class="form-control"
+              id="phone"
+              name="phone"
+              value="{{ data.contact }}"
+              pattern="[0-9]{10}"
+              placeholder="10-digit phone number"
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="qualification" class="col-sm-3 col-form-label fw-bold">Qualification</label>
+          <div class="col-sm-9">
+            <select class="form-control" id="qualification" name="qualification" required>
+              <option value="">Select Qualification</option>
+              <option value="SSLC">SSLC</option>
+              <option value="Plus Two">Plus Two</option>
+              <option value="Diploma">Diploma</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="PhD">PhD</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="experience" class="col-sm-3 col-form-label fw-bold">Experience</label>
+          <div class="col-sm-9">
+            <input
+              type="text"
+              class="form-control"
+              id="experience"
+              name="experience"
+              value="{{ data.experience }}"
+              required>
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <!-- 🔵 Button changed to BLUE -->
+          <button type="submit" class="btn btn-primary px-4">
+            Update
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

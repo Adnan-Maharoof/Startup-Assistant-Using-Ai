@@ -1,0 +1,41 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <!-- Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Send Reply
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/sendreplyspost/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table class="table table-bordered align-middle">
+          <tr>
+            <td class="fw-bold">Reply</td>
+            <td>
+              <input
+                type="text"
+                class="form-control"
+                name="reply"
+                placeholder="Type your reply here"
+                required
+              >
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-center">
+              <!-- Button changed to BLUE -->
+              <button type="submit" class="btn btn-primary px-4">
+                Send
+              </button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Add Startup Session
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/add_legal_guide_Post/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3 row">
+          <label for="type" class="col-sm-2 col-form-label fw-bold">Type</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="type"
+              name="type"
+              placeholder="Enter type"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="title" class="col-sm-2 col-form-label fw-bold">Title</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              placeholder="Enter title"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="content" class="col-sm-2 col-form-label fw-bold">Content</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="content"
+              name="content"
+              placeholder="Enter content"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="category" class="col-sm-2 col-form-label fw-bold">Category</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="category"
+              name="category"
+              placeholder="Enter category"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="text-center">
+          <!-- 🔵 Button changed to BLUE -->
+          <button type="submit" class="btn btn-primary px-4">
+            Add
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Edit Startup Idea
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/edit_startup_idea_post/" method="post">
+        {% csrf_token %}
+
+        <div class="mb-3 row">
+          <label for="title" class="col-sm-2 col-form-label fw-bold">Title</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              value="{{ data.title }}"
+              placeholder="Enter title"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="description" class="col-sm-2 col-form-label fw-bold">Description</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="description"
+              name="description"
+              value="{{ data.description }}"
+              placeholder="Enter description"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="industry" class="col-sm-2 col-form-label fw-bold">Industry</label>
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control"
+              id="industry"
+              name="industry"
+              value="{{ data.industry }}"
+              placeholder="Enter industry"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="text-center">
+          <!-- 🔵 Button changed to BLUE -->
+          <button type="submit" class="btn btn-primary px-4">
+            Edit
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

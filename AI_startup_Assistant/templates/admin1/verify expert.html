@@ -1,0 +1,100 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Experts</title>
+
+    <style>
+        .table-header th {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 15px;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <!-- CHANGED: bg-success → bg-primary -->
+        <div class="card-header bg-primary text-white">
+            Manage Experts
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+                <!-- CHANGED: table-success → table-primary -->
+                <thead class="table-primary table-header">
+                    <tr>
+                        <th>SL NO</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Qualification</th>
+                        <th>Experience</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for i in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.contact }}</td>
+                        <td>{{ i.qualification }}</td>
+                        <td>{{ i.experience }}</td>
+
+                        <td>
+                            {% if i.status == "pending" %}
+                                <a href="/myapp/acceptexpert/{{ i.id }}" class="btn btn-sm btn-warning">Accept</a>
+                                <a href="/myapp/rejectexpert/{{ i.id }}" class="btn btn-sm btn-danger">Reject</a>
+
+                            {% elif i.status == "accepted" %}
+                                <a href="/myapp/blockexpert/{{ i.id }}" class="btn btn-sm btn-danger">Block</a>
+
+                            {% elif i.status == "rejected" or i.status == "block" %}
+                                <a href="/myapp/unblockexpert/{{ i.id }}" class="btn btn-sm btn-primary">Unblock</a>
+
+                            {% elif i.status == "unblocked" %}
+                                <a href="/myapp/blockexpert/{{ i.id }}" class="btn btn-sm btn-danger">Block</a>
+
+                            {% else %}
+                                <!-- CHANGED: bg-success → bg-primary -->
+                                <span class="badge bg-primary">{{ i.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- DataTables Init -->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+</body>
+</html>
+{% endblock %}

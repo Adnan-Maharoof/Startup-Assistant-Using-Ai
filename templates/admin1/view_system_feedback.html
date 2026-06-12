@@ -1,0 +1,72 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<style>
+  .table-header th {
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 15px;
+  }
+</style>
+
+<!-- Container -->
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      View Feedback
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+
+        <!-- 🔵 Table header changed to BLUE -->
+        <thead class="table-primary table-header">
+          <tr>
+            <th>SL NO</th>
+            <th>Feedback</th>
+            <th>Type</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.feedback }}</td>
+            <td>{{ i.type }}</td>
+            <td>{{ i.name }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Initialization -->
+<script>
+  $(document).ready(function () {
+      $('#example').DataTable({
+          paging: true,
+          ordering: true,
+          searching: true
+      });
+  });
+</script>
+
+{% endblock %}

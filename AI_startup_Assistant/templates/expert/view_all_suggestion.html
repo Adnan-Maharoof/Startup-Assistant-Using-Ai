@@ -1,0 +1,64 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      View Suggestions
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+        <thead class="table-primary table-header">
+          <tr>
+            <th>SL NO</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Industry</th>
+            <th>Type</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ i.title }}</td>
+              <td>{{ i.description }}</td>
+              <td>{{ i.industry }}</td>
+              <td>{{ i.type }}</td>
+              <td>{{ i.name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- ✅ DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Initialization -->
+<script>
+  $(document).ready(function () {
+      $('#example').DataTable({
+          "paging": true,
+          "ordering": true,
+          "searching": true
+      });
+  });
+</script>
+
+{% endblock %}

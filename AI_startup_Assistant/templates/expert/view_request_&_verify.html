@@ -1,0 +1,47 @@
+
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white">
+      User Requests
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead class="table-light">
+          <tr>
+            <th>User </th>
+            <th>expert</th>
+            <th>date</th>
+            <th>status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in data %}
+          <tr>
+            <td>{{ i.USER.name }}</td>
+            <td>{{ i.EXPERT.name }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.status }}</td>
+            <td>
+                {% if i.status == "pending" %}
+              <a href="/myapp/acceptrequest/ {{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+                <a href="/myapp/rejectrequest/ {{ i.id }}" class="btn btn-danger btn-sm">Reject</a>
+                    {% elif i.status == 'rejected' %}
+                                  <a href="/myapp/acceptrequest/ {{ i.id }}" class="btn btn-success btn-sm">Accept</a>
+
+                    {% elif i.status == 'accepted' %}
+                                    <a href="/myapp/rejectrequest/ {{ i.id }}" class="btn btn-danger btn-sm">Reject</a>
+
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

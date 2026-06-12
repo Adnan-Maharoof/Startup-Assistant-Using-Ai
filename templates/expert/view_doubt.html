@@ -1,0 +1,67 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <!-- Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Manage Doubts
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+        <!-- Table header changed to BLUE -->
+        <thead class="table-primary table-header">
+          <tr>
+            <th>User</th>
+            <th>Doubt</th>
+            <th>Date</th>
+            <th>Reply</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        {% for i in data %}
+          <tr>
+            <td>{{ i.USER.name }}</td>
+            <td>{{ i.feedback }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.reply }}</td>
+            <td>
+              <!-- Button changed to BLUE -->
+              <a href="/myapp/sendreply_doubt/{{ i.id }}" class="btn btn-sm btn-primary">
+                Reply
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Initialization -->
+<script>
+  $(document).ready(function () {
+      $('#example').DataTable({
+          paging: true,
+          ordering: true,
+          searching: true
+      });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Investors</title>
+
+    <style>
+        .table-header th {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 15px;
+        }
+        img {
+            object-fit: cover;
+        }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <!-- CHANGED GREEN TO BLUE -->
+        <div class="card-header bg-primary text-white">
+            User Details
+        </div>
+
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+                <!-- CHANGED TABLE HEADER COLOR TO BLUE -->
+                <thead class="table-primary table-header">
+                    <tr>
+                        <th>SL NO</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Place</th>
+                        <th>Post</th>
+                        <th>Pin</th>
+                        <th>Qualification</th>
+                        <th>Skills</th>
+                        <th>Interested Areas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.email }}</td>
+                        <td>{{ i.phone }}</td>
+                        <td>{{ i.place }}</td>
+                        <td>{{ i.post }}</td>
+                        <td>{{ i.pin }}</td>
+                        <td>{{ i.qualification }}</td>
+                        <td>{{ i.skills }}</td>
+                        <td>{{ i.interested_area }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+</body>
+</html>
+
+{% endblock %}

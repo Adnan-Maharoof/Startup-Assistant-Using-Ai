@@ -1,0 +1,59 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Add Notification
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/add_notification_post/" method="post">
+        {% csrf_token %}
+
+        <table class="table table-bordered align-middle">
+          <tr>
+            <td class="fw-bold">Notification</td>
+            <td>
+              <input
+                type="text"
+                class="form-control"
+                name="notification"
+                placeholder="Enter notification"
+                required
+              >
+            </td>
+          </tr>
+
+          <tr>
+            <td class="fw-bold">Details</td>
+            <td>
+              <input
+                type="text"
+                class="form-control"
+                name="details"
+                placeholder="Enter details"
+                required
+              >
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2" class="text-center">
+
+              <!-- 🔵 Button changed to BLUE -->
+              <button type="submit" class="btn btn-primary px-4">
+                Add
+              </button>
+
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

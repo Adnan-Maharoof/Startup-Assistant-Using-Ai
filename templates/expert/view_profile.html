@@ -1,0 +1,57 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Profile Details
+    </div>
+
+    <div class="card-body">
+      <table class="table table-bordered align-middle">
+        <tbody>
+          <tr>
+            <th class="w-25">Name</th>
+            <td>{{ data.name }}</td>
+          </tr>
+
+          <tr>
+            <th>Email</th>
+            <td>{{ data.email }}</td>
+          </tr>
+
+          <tr>
+            <th>Phone</th>
+            <td>{{ data.contact }}</td>
+          </tr>
+
+          <tr>
+            <th>Qualification</th>
+            <td>{{ data.qualification }}</td>
+          </tr>
+
+          <tr>
+            <th>Experience</th>
+            <td>{{ data.experience }}</td>
+          </tr>
+
+          <tr>
+            <td colspan="2" class="text-center">
+
+              <!-- 🔵 Button changed to BLUE -->
+              <a href="/myapp/update_profile_get/" class="btn btn-primary">
+                Update Profile
+              </a>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

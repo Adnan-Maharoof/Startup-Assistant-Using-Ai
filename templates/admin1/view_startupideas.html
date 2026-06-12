@@ -1,0 +1,93 @@
+{% extends "admin1/admin_index.html" %}
+{% block body %}
+
+<!-- ✅ DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<!-- Container -->
+<div class="container mt-5">
+  <div class="card shadow-sm">
+
+    <!-- 🔵 Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Manage Startup
+    </div>
+
+    <div class="card-body">
+
+      <table class="table table-bordered table-striped table-hover align-middle text-center" id="example">
+
+        <!-- 🔵 Table header changed to BLUE -->
+        <thead class="table-primary table-header">
+          <tr>
+            <th>SL NO</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Industry</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for i in data %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.title }}</td>
+            <td>{{ i.description }}</td>
+            <td>{{ i.industry }}</td>
+
+            <td>
+              <a href="/myapp/edit_startup_idea_get/{{ i.id }}" class="btn btn-primary btn-sm">
+                Edit
+              </a>
+            </td>
+
+            <td>
+              <a href="/myapp/delete_startup/{{ i.id }}" class="btn btn-danger btn-sm"
+                 onclick="return confirm('Are you sure you want to delete this startup?');">
+                Delete
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+        <!-- Footer row -->
+        <tfoot>
+          <tr>
+            <td colspan="6" class="text-center">
+
+              <!-- 🔵 Add button changed to BLUE -->
+              <a href="/myapp/add_startupidea_get/" class="btn btn-primary">
+                Add New Startup Idea
+              </a>
+
+            </td>
+          </tr>
+        </tfoot>
+
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<!-- ✅ jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- ✅ DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- DataTables Init -->
+<script>
+  $(document).ready(function () {
+      $('#example').DataTable({
+          paging: true,
+          ordering: true,
+          searching: true
+      });
+  });
+</script>
+
+{% endblock %}

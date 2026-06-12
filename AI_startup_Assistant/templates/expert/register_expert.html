@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expert Signup - AI Startup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0f;
+      min-height: 100vh;
+      padding: 40px 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 150, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 200, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(120, 0, 255, 0.1) 0%, transparent 50%);
+      animation: gradientShift 20s ease infinite;
+      z-index: 0;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-10%, -10%) rotate(5deg); }
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      animation: float 15s infinite ease-in-out;
+      z-index: 1;
+    }
+
+    .orb1 {
+      width: 300px;
+      height: 300px;
+      background: rgba(0, 255, 150, 0.3);
+      top: 10%;
+      left: -10%;
+      animation-delay: 0s;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: rgba(120, 0, 255, 0.3);
+      bottom: 10%;
+      right: -10%;
+      animation-delay: 5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(50px, -50px); }
+      66% { transform: translate(-30px, 30px); }
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 10;
+    }
+
+    .signup-card {
+      background: rgba(15, 15, 25, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 100px rgba(0, 255, 150, 0.05);
+      animation: slideUp 0.6s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #00ff96, #00c8ff);
+      padding: 30px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: headerShine 8s linear infinite;
+    }
+
+    @keyframes headerShine {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .card-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #0a0a0f;
+      margin: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-header p {
+      color: rgba(10, 10, 15, 0.8);
+      margin: 8px 0 0;
+      font-size: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-body {
+      padding: 40px;
+    }
+
+    .form-row {
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #c0c0c0;
+      text-align: right;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(30, 30, 45, 0.6);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    select:focus {
+      border-color: #00ff96;
+      background: rgba(30, 30, 45, 0.9);
+      box-shadow: 0 0 0 4px rgba(0, 255, 150, 0.1);
+    }
+
+    input::placeholder {
+      color: #555;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23888' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      padding-right: 45px;
+    }
+
+    select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #555;
+      pointer-events: none;
+    }
+
+    .submit-wrapper {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .submit-btn {
+      padding: 16px 60px;
+      background: linear-gradient(135deg, #00ff96, #00c8ff);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #0a0a0f;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 255, 150, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0, 255, 150, 0.5);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .login-link p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #00ff96;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .login-link a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #00ff96;
+      transition: width 0.3s ease;
+    }
+
+    .login-link a:hover::after {
+      width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .card-body {
+        padding: 30px 25px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      label {
+        text-align: left;
+      }
+
+      .card-header h2 {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 15px;
+      }
+
+      .card-header {
+        padding: 25px 25px;
+      }
+
+      .submit-btn {
+        padding: 14px 40px;
+        font-size: 15px;
+      }
+    }
+
+    /* Input validation states */
+    input:invalid:not(:placeholder-shown) {
+      border-color: rgba(255, 100, 100, 0.5);
+    }
+
+    input:valid:not(:placeholder-shown) {
+      border-color: rgba(0, 255, 150, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background orbs -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div class="container">
+    <div class="signup-card">
+      <div class="card-header">
+        <h2>Expert Signup</h2>
+        <p>Join our network of AI professionals and industry experts</p>
+      </div>
+
+      <div class="card-body">
+        <form action="/myapp/expertregister_post/" method="post">
+          {% csrf_token %}
+
+          <div class="form-row">
+            <label for="name">Name</label>
+            <div class="input-wrapper">
+              <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <div class="input-wrapper">
+              <input type="text" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10-digit phone number">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="qualification">Qualification</label>
+            <div class="input-wrapper">
+              <select id="qualification" name="qualification" required>
+                <option value="">Select Qualification</option>
+                <option value="SSLC">SSLC</option>
+                <option value="Plus Two">Plus Two</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Bachelor's Degree">Bachelor's Degree</option>
+                <option value="Master's Degree">Master's Degree</option>
+                <option value="PhD">PhD</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="experience">Experience (Years)</label>
+            <div class="input-wrapper">
+              <input type="text"
+                     id="experience"
+                     name="experience"
+                     required
+                     pattern="^([0-9]|[1-4][0-9]|50)$"
+                     placeholder="0-50 years"
+                     title="Enter a valid experience between 0 and 50">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="username">Username</label>
+            <div class="input-wrapper">
+              <input type="text" id="username" name="username" placeholder="Choose a unique username" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+            </div>
+          </div>
+
+          <div class="submit-wrapper">
+            <button type="submit" class="submit-btn">Create Account</button>
+          </div>
+        </form>
+
+        <div class="login-link">
+          <p>Already have an account? <a href="/myapp/login/">Sign In</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "expert/expert_home.html" %}
+{% block body %}
+
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <!-- Header changed to BLUE -->
+    <div class="card-header bg-primary text-white">
+      Send Reply
+    </div>
+
+    <div class="card-body">
+      <form action="/myapp/sendreplyspost_doubt/" method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="reply" class="form-label">Reply</label>
+          <input
+            type="text"
+            class="form-control"
+            id="reply"
+            name="reply"
+            placeholder="Type your reply here"
+            required
+          >
+        </div>
+
+        <div class="text-center">
+          <!-- Button changed to BLUE -->
+          <input type="submit" class="btn btn-primary px-4" value="Send">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

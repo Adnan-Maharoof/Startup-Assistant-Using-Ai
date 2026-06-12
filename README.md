@@ -14,7 +14,6 @@ The system provides personalized startup recommendations, market analysis, exper
 * Personalized Startup Idea Recommendations
 * Startup Feasibility Analysis
 * Market Trend Analysis
-* Competitor Analysis
 * Expert Consultation
 * Investor Discovery
 * Idea Bookmarking and Management
